@@ -1,3 +1,4 @@
+sudo systemctl stop docker && \
 sudo yum remove docker \
                 docker-client \
                 docker-client-latest \
@@ -13,9 +14,9 @@ sudo yum install docker-ce \
                  containerd.io \
                  docker-buildx-plugin \
                  docker-compose-plugin -y && \
-sudo systemctl start docker && \
-sudo groupadd docker && \
+sudo groupadd docker -f && \
 sudo usermod -aG docker $USER && \
 sudo systemctl enable docker.service && \
 sudo systemctl enable containerd.service && \
-docker --version
+sudo systemctl start docker && \
+awk -F= '$1=="PRETTY_NAME" { print "Docker Service installation finish in " $2 ;}' /etc/os-release
